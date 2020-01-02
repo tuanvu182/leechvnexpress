@@ -1,23 +1,25 @@
 import { combineReducers } from "redux";
-import {
-  FETCH_NEWS,
-  FETCH_NEWS_ECO,
-  FETCH_NEWS_REL,
-  FETCH_NEWS_WORLD
-} from "../actions/types";
+import { FETCH_NEWS, CHANGE_DISPLAY } from "../actions/types";
 
 const fetchReducer = (initialState = [], action) => {
   switch (action.type) {
     case FETCH_NEWS:
-    case FETCH_NEWS_WORLD:
-    case FETCH_NEWS_ECO:
-    case FETCH_NEWS_REL:
-      return action.payload;
+      return initialState !== action.payload ? action.payload : initialState;
+    default:
+      return initialState;
+  }
+};
+
+const displayReducer = (initialState = 8, action) => {
+  switch (action.type) {
+    case CHANGE_DISPLAY:
+      return initialState !== action.payload ? action.payload : initialState;
     default:
       return initialState;
   }
 };
 
 export default combineReducers({
-  news: fetchReducer
+  news: fetchReducer,
+  displayNum: displayReducer
 });
